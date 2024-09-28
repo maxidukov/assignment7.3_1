@@ -2,6 +2,7 @@
 #include <vector>
 #include <future>
 #include <algorithm>
+#include <thread>
 
 template<class Num>
 std::size_t my_min_index(const std::vector<Num>&, const std::size_t&);
@@ -13,6 +14,7 @@ template<class Num>
 void my_sort_async(std::vector<Num>&);
 
 int main(){
+    //std::cout << "Main thread with id " << std::this_thread::get_id() << " launched\n";
     std::vector<int> vec{1,4,3,7,59,-3};
     //std::vector<int> vec{};
 
@@ -39,6 +41,7 @@ std::size_t my_min_index(const std::vector<Num>& vec, const std::size_t& start){
 }
 template<class Num>
 void my_min_index_promise(const std::vector<Num>& vec, const std::size_t& start, std::promise<std::size_t> prm){
+    //std::cout << "This is happening in thread " << std::this_thread::get_id() << "\n";
     if(vec.size()) prm.set_value(my_min_index(vec, start));
     //else prm.set_exception(std::make_exception_ptr(std::logic_error("Empty vector!\n")));
 }
